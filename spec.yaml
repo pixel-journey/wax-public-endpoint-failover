@@ -1,0 +1,23 @@
+name: wax-public-endpoint-failover
+trust_label: educational-reference
+version: 0.1.0
+purpose: >
+  Choose an API family, then the first of at most five https origins that is up and on WAX mainnet.
+invariants:
+  - src/origin.ts, src/failover.ts, src/choose.ts, and src/request.ts perform no network calls.
+  - A public origin must be https and must not carry credentials or a path.
+  - firstUp stops at the first origin the caller marked up.
+  - acceptChainInfo requires the WAX mainnet chain id.
+  - producer-health does not build a node request.
+do_not:
+  - Do not call every block producer on page load.
+  - Do not treat one smoke test as a promise that a host stays up.
+entrypoints:
+  logic: src/failover.ts
+  tests: src/failover.test.ts
+  demo: src/Demo.tsx
+commands:
+  test: npm test
+live_data:
+  status: smoke
+  notes: Four reads on 2026-10-23, recorded in VERIFICATION-LOG.md. Not a monitor.
