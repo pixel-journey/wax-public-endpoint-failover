@@ -2,10 +2,18 @@
 
 import { useState } from "react";
 import { chooseApi, type Job } from "./choose";
+import { buildExample, PRODUCER_PAGES, type ExampleId, waitMs } from "./examples";
 import { firstUp } from "./failover";
 import { parseOrigin } from "./origin";
 
 const PRESETS = ["https://wax.greymass.com", "https://wax.cryptolions.io", "https://api.wax.alohaeos.com"];
+const SAMPLES: { id: ExampleId; origin: string; ticker?: string }[] = [
+  { id: "chain-balance", origin: "https://wax.greymass.com" },
+  { id: "hyperion-actions", origin: "https://wax.eosphere.io" },
+  { id: "atomic-assets", origin: "https://wax.api.atomicassets.io" },
+  { id: "alcor-orderbook", origin: "https://wax.alcor.exchange", ticker: "cr-tarukofficer_wax-eosio.token" },
+  { id: "light-balances", origin: "https://lightapi.eosamsterdam.net" },
+];
 const JOBS: Job[] = ["balance", "account", "history", "nft", "sale", "spot-ticker", "producer-health"];
 
 export function Demo() {
@@ -54,6 +62,33 @@ export function Demo() {
       <p>
         <a href={choice.doc}>Documentation for this job</a>
       </p>
+      <h2>Unsent examples</h2>
+      <p>Same shapes as the tests. Nothing here is fetched. If the last call in a family was 200 ms ago, wait {waitMs(0, 200)} ms.</p>
+      <ul>
+        {SAMPLES.map((sample) => {
+          const built = buildExample(sample.id, sample.origin, { account: "eosio", ticker: sample.ticker, depth: 1, limit: 1 });
+          return (
+            <li key={sample.id}>
+              {built.ok ? (
+                <>
+                  <code>{built.request.method}</code> {built.request.url}
+                  {built.request.warning ? <span> — {built.request.warning}</span> : null}
+                </>
+              ) : (
+                built.reason
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      <h2>Producer health is a directory</h2>
+      <ul>
+        {PRODUCER_PAGES.map((page) => (
+          <li key={page.url}>
+            <a href={page.url}>{page.title}</a>
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }

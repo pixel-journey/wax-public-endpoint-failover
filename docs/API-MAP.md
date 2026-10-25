@@ -46,3 +46,8 @@ On 2026-10-23, `POST /v1/chain/get_info` with `{}` returned 200 and that chain i
 - [Hyperion v2](https://hyperion.docs.eosrio.io/api/v2/) and the [WAX Hyperion note](https://docs.wax.io/build/api-reference/hyperion-history-api)
 - [AtomicAssets API](https://docs.wax.io/apis/atomic-api.htm)
 - [Alcor API](https://docs.alcor.exchange/api) and [market data](https://docs.alcor.exchange/api/market-data)
+
+## Usage examples
+
+Concrete unsent requests, the Light API paths, the Alcor `ticker_id` shape, and the 2026-10-25 note that `/v2/health` is not `get_actions`, are in [USAGE-EXAMPLES.md](USAGE-EXAMPLES.md). The builder is `src/examples.ts`.
+

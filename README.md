@@ -15,11 +15,13 @@ The longer map of Chain, Hyperion, AtomicAssets, AtomicMarket, Alcor, Light API,
 | `src/failover.ts` | First success in a list of at most five. Chain id check |
 | `src/choose.ts` | Which family answers which question, with the doc URL |
 | `src/request.ts` | The matching HTTP request, `executed: false` |
-| `src/Demo.tsx` | Presets, a custom field, and a simulated down host |
+| `src/examples.ts` | Unsent usage examples: table rows, ABI, Hyperion, Atomic, Alcor book, Light API, wax.json |
+| `src/Demo.tsx` | Presets, a custom field, a simulated down host, and the example URLs |
 | `docs/API-MAP.md` | When to use each API, and where the docs are |
+| `docs/USAGE-EXAMPLES.md` | The same requests, written out, including what not to call |
 
 `npm test` runs the rules. `npm run dev` opens the page.
 
 ## Queries
 
-The unit tests do not call a host. A separate smoke on 2026-10-23 is written in `VERIFICATION-LOG.md` and is not a standing claim that those hosts answer.
+The unit tests do not call a host. Smokes on 2026-10-23 and 2026-10-25 are written in `VERIFICATION-LOG.md` and are not a standing claim that those hosts answer.
