@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { RelatedBlueprints } from "./RelatedBlueprints";
 import { chooseApi, type Job } from "./choose";
 import { buildExample, PRODUCER_PAGES, type ExampleId, waitMs } from "./examples";
 import { firstUp } from "./failover";
+import { FAILOVER_MYTHS } from "./myths";
 import { parseOrigin } from "./origin";
 
 const PRESETS = ["https://wax.greymass.com", "https://wax.cryptolions.io", "https://api.wax.alohaeos.com"];
@@ -28,12 +30,27 @@ export function Demo() {
 
   return (
     <main className="wrap">
-      <p className="kicker">Educational reference</p>
+      <p className="kicker">Educational reference · Pixel Journey</p>
       <h1>Which WAX API, and the next endpoint</h1>
       <p className="lede">
         Walk at most five https origins, in order, and stop at the first one you marked up. Then check the body's chain id
         before you trust it. This page does not call them.
       </p>
+
+      <section style={{ marginBottom: "1.5rem", padding: "1rem", border: "1px solid #a855f744", borderRadius: "12px" }}>
+        <h2 style={{ fontSize: "1rem", marginTop: 0 }}>Myths vs reality</h2>
+        {FAILOVER_MYTHS.map((m) => (
+          <div key={m.myth} style={{ marginBottom: "0.75rem", fontSize: "0.9rem" }}>
+            <p style={{ margin: 0 }}>
+              <strong>Myth:</strong> {m.myth}
+            </p>
+            <p style={{ margin: "0.25rem 0 0" }}>
+              <strong>Reality:</strong> {m.reality}
+            </p>
+          </div>
+        ))}
+      </section>
+
       <label>
         Custom origin
         <input value={custom} onChange={(event) => setCustom(event.target.value)} placeholder="https://your-node.example" style={{ display: "block", width: "100%", margin: "0.4rem 0 1rem" }} />
@@ -89,6 +106,8 @@ export function Demo() {
           </li>
         ))}
       </ul>
+
+      <RelatedBlueprints />
     </main>
   );
 }
