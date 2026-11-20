@@ -7,6 +7,8 @@ Which WAX API to call, and how a UI fails over to the next https endpoint.
 
 Walk at most five https origins, in order, and stop at the first one marked up. A custom origin is allowed. `get_info.chain_id` must be WAX mainnet before that origin is trusted. The demo page does not call hosts by default.
 
+The course is [EDUCATION.md](EDUCATION.md). `npm test` builds the requests and does not send them.
+
 ```bash
 npm test && npm run dev
 ```
