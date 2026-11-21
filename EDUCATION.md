@@ -11,7 +11,7 @@ Official: [docs.wax.io](https://docs.wax.io/) · policy: [POLICY.md](POLICY.md).
 | --- | --- |
 | Beginner | Accept only the pinned mainnet chain id |
 | Intermediate | Explain first-up, five-origin cap, waitMs boundary |
-| Masterclass | Separate chain, history, and Alcor host families |
+| Masterclass | Separate chain, history, and Alcor host families; refuse HTTP 200 on the wrong chain |
 
 ---
 
@@ -41,12 +41,22 @@ npm test
 | a table limit of `101` | not ok. The example cap is 100. |
 | history on `wax.eosphere.io` | the actions URL contains `limit=1` and has no warning |
 | a history origin that is not the known list | a warning that tells you to probe history |
-| Alcor order book depth `fix` | not ok |
+| Alcor order book depth `NaN` | not ok |
 | an Alcor path on a chain host | a warning that the host is wrong |
 | `https://guild.example/wax.json` | ok |
 | `bp.json` or `http://` | not ok |
 
 `get_info` is built. This file does not call it. Trust a body only after its `chain_id` matches the string above.
+
+### Host families
+
+| Family | Typical paths |
+| --- | --- |
+| Chain RPC | `/v1/chain/get_info`, table rows |
+| History | `/v2/history/get_actions` |
+| Alcor | order book / markets API |
+
+Do not point Alcor paths at a chain RPC host.
 
 ---
 
@@ -58,13 +68,24 @@ npm test
 2. Putting more than five origins in the failover list.  
 3. Calling Alcor paths on a chain RPC host.  
 4. Using `http://` for public RPCs (localhost excepted in policy).  
-5. Claiming a continuous uptime SLA from educational unit tests.
+5. Claiming a continuous uptime SLA from educational unit tests.  
+6. Treating `executed: false` builders as proof a node answered.
+
+### Attack → test
+
+| Attack | Lab behavior |
+| --- | --- |
+| Fork returns 200, wrong chain id | refused |
+| Six failover origins | refused |
+| Alcor path on chain host | warning |
+| Table limit 101 | refused |
 
 ### Exercises
 
-1. Wrong chain id, status 200 — accept? (No.)  
-2. `waitMs` when elapsed equals timeout — remaining? (`0`.)  
-3. Does this lab send `get_info`? (No.)
+1. Wrong chain id, status 200 — accept? (**No**.)  
+2. `waitMs` when elapsed equals timeout — remaining? (**0**.)  
+3. Does this lab send `get_info`? (**No**.)  
+4. Max origins in the failover list? (**5**.)
 
 ---
 
@@ -73,3 +94,4 @@ npm test
 - Live probing of every guild endpoint
 - Private keys or signing
 - That the first origin is always healthy in production
+- A standing SLA or uptime guarantee
