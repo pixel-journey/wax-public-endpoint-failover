@@ -5,9 +5,9 @@
 | Issue | Behavior |
 | --- | --- |
 | Wrong `chain_id` | refused even if HTTP would be 200 |
-| More than five origins | refused |
+| More than **five** origins | refused |
 | `http://` public / `bp.json` | refused |
-| Table limit 101 | refused (cap 100) |
+| Table limit 101 | refused (cap **100**) |
 | Alcor depth `NaN` | refused |
 | Alcor path on chain host | warning (wrong family) |
 | Pinned mainnet id | `1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4` |
@@ -32,4 +32,11 @@
 
 ## Honesty limits
 
-Requests are built with `executed: false`. No standing SLA. Same chain id pinned in [msig simulator](https://github.com/pixel-journey/wax-multi-sig-proposal-builder-and-simulator). [docs.wax.io](https://docs.wax.io/) · [POLICY.md](POLICY.md) · [WharfKit](https://wharfkit.com/).
+Requests are built with `executed: false`. No standing SLA.
+
+| Sibling | Distinction |
+| --- | --- |
+| [msig simulator](https://github.com/pixel-journey/wax-multi-sig-proposal-builder-and-simulator) | Same pinned mainnet chain id |
+| [offline queue](https://github.com/pixel-journey/wax-offline-transaction-queue) | FIFO local queue, not RPC |
+
+[docs.wax.io](https://docs.wax.io/) · [POLICY.md](POLICY.md) · [WharfKit](https://wharfkit.com/).
